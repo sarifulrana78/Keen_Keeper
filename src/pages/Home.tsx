@@ -4,6 +4,7 @@ import { Plus, Users, CheckCircle, AlertCircle, BarChart2, Search, Download } fr
 import { useFriends } from '../context/FriendContext';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import Button from '../components/ui/Button';
+import FriendSkeleton from '../components/ui/FriendSkeleton';
 import { motion } from 'motion/react';
 
 const Home: React.FC = () => {
@@ -126,7 +127,18 @@ const Home: React.FC = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredFriends.map((friend, idx) => (
+          {isLoading
+            ? Array.from({ length: 8 }).map((_, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: idx * 0.05 }}
+                >
+                  <FriendSkeleton />
+                </motion.div>
+              ))
+            : filteredFriends.map((friend, idx) => (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
