@@ -64,11 +64,6 @@ export const FriendProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     loadData();
   }, []);
-      localStorage.setItem('keenkeeper_timeline', JSON.stringify(initialTimeline));
-    }
-
-    return () => clearTimeout(timer);
-  }, []);
 
   const addTimelineEntry = (friendId: number, friendName: string, type: 'call' | 'text' | 'video') => {
     const newEntry: TimelineEntry = {
