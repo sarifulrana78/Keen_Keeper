@@ -7,7 +7,7 @@ import Button from '../components/ui/Button';
 import { motion } from 'motion/react';
 
 const Home: React.FC = () => {
-  const { friends, isLoading, timeline } = useFriends();
+  const { friends, isLoading, timeline, error } = useFriends();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -30,6 +30,17 @@ const Home: React.FC = () => {
     { label: 'Need Attention', value: needAttentionCount, icon: AlertCircle, color: 'text-amber-600' },
     { label: 'Interactions This Month', value: interactionCount, icon: BarChart2, color: 'text-brand' },
   ];
+
+  if (error) {
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
+        <div className="text-red-500 text-center">
+          <p className="text-lg font-semibold">Oops! Something went wrong</p>
+          <p className="text-sm text-slate-500">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
