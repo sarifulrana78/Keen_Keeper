@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Users, CheckCircle, AlertCircle, BarChart2, Search } from 'lucide-react';
+import { Plus, Users, CheckCircle, AlertCircle, BarChart2, Search, Download } from 'lucide-react';
 import { useFriends } from '../context/FriendContext';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import Button from '../components/ui/Button';
@@ -18,6 +18,16 @@ const Home: React.FC = () => {
       friend.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
     );
   }, [friends, searchQuery]);
+
+  const exportFriends = () => {
+    const dataStr = JSON.stringify(filteredFriends, null, 2);
+    const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+    const exportFileDefaultName = 'friends.json';
+    const linkElement = document.createElement('a');
+    linkElement.setAttribute('href', dataUri);
+    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.click();
+  };
 
   const totalFriends = friends.length;
   const onTrackCount = friends.filter(f => f.status === 'on-track').length;
@@ -94,21 +104,26 @@ const Home: React.FC = () => {
           >
             Your Friends
           </motion.h2>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="relative w-full sm:w-80"
-          >
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
-            <input
-              type="text"
-              placeholder="Search friends..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-            />
-          </motion.div>
+          <div className="flex gap-2">
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="relative w-full sm:w-80"
+            >
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+              <input
+                type="text"
+                placeholder="Search friends..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+              />
+            </motion.div>
+            <Button variant="outline" size="sm" onClick={exportFriends}>
+              <Download size={18} />
+            </Button>
+          </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredFriends.map((friend, idx) => (
