@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, Users, CheckCircle, AlertCircle, BarChart2, Search } from 'lucide-react';
 import { useFriends } from '../context/FriendContext';
 import { StatusBadge } from '../components/ui/StatusBadge';
+import Button from '../components/ui/Button';
 import { motion } from 'motion/react';
 
 const Home: React.FC = () => {
@@ -49,10 +50,10 @@ const Home: React.FC = () => {
         <p className="text-lg text-slate-500 max-w-2xl mx-auto mb-8 font-light">
           Your personal shelf of meaningful connections. Browse, tend, and nurture the relationships that matter most.
         </p>
-        <button className="inline-flex items-center gap-2 bg-brand-dark text-white px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg shadow-brand/20">
+        <Button size="lg">
           <Plus size={20} />
           Add a Friend
-        </button>
+        </Button>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-16 text-left">
