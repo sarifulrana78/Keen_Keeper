@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Users, CheckCircle, AlertCircle, BarChart2 } from 'lucide-react';
+import { Plus, Users, CheckCircle, AlertCircle, BarChart2, Search } from 'lucide-react';
 import { useFriends } from '../context/FriendContext';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { motion } from 'motion/react';
@@ -8,6 +8,15 @@ import { motion } from 'motion/react';
 const Home: React.FC = () => {
   const { friends, isLoading, timeline } = useFriends();
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredFriends = useMemo(() => {
+    if (!searchQuery) return friends;
+    return friends.filter(friend =>
+      friend.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      friend.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  }, [friends, searchQuery]);
 
   const totalFriends = friends.length;
   const onTrackCount = friends.filter(f => f.status === 'on-track').length;
@@ -64,9 +73,21 @@ const Home: React.FC = () => {
 
       {/* Friends Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-xl font-bold text-slate-900 mb-8 px-2">Your Friends</h2>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
+          <h2 className="text-xl font-bold text-slate-900">Your Friends</h2>
+          <div className="relative w-full sm:w-80">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
+            <input
+              type="text"
+              placeholder="Search friends..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-brand focus:border-transparent"
+            />
+          </div>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {friends.map((friend, idx) => (
+          {filteredFriends.map((friend, idx) => (
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
