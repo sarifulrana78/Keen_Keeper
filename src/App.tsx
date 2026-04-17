@@ -11,6 +11,7 @@ const Home = lazy(() => import('./pages/Home'));
 const FriendDetails = lazy(() => import('./pages/FriendDetails'));
 const Timeline = lazy(() => import('./pages/Timeline'));
 const Stats = lazy(() => import('./pages/Stats'));
+const Settings = lazy(() => import('./pages/Settings'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const LoadingFallback = () => (
@@ -32,8 +33,7 @@ export default function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/friend/:id" element={<FriendDetails />} />
                   <Route path="/timeline" element={<Timeline />} />
-                  <Route path="/stats" element={<Stats />} />
-                  <Route path="*" element={<NotFound />} />
+                  <Route path="/stats" element={<Stats />} />                <Route path="/settings" element={<Settings />} />                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
             </main>

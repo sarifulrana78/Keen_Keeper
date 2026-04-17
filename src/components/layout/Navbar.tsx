@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Home, Clock, BarChart3, Moon, Sun } from 'lucide-react';
+import { Home, Clock, BarChart3, Moon, Sun, Settings } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { useTheme } from '../../context/ThemeContext';
 import Button from '../ui/Button';
@@ -11,6 +11,7 @@ export const Navbar: React.FC = () => {
     { to: '/', label: 'Home', icon: Home },
     { to: '/timeline', label: 'Timeline', icon: Clock },
     { to: '/stats', label: 'Stats', icon: BarChart3 },
+    { to: '/settings', label: 'Settings', icon: Settings },
   ];
 
   return (
