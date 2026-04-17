@@ -6,6 +6,7 @@ import { StatusBadge } from '../components/ui/StatusBadge';
 import Button from '../components/ui/Button';
 import FriendSkeleton from '../components/ui/FriendSkeleton';
 import { motion } from 'motion/react';
+import { toast } from 'sonner';
 
 const Home: React.FC = () => {
   const { friends, isLoading, timeline, error } = useFriends();
@@ -28,6 +29,7 @@ const Home: React.FC = () => {
     linkElement.setAttribute('href', dataUri);
     linkElement.setAttribute('download', exportFileDefaultName);
     linkElement.click();
+    toast.success('Friends data exported successfully!');
   };
 
   const totalFriends = friends.length;
