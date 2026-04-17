@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { FriendProvider } from './context/FriendContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 
@@ -20,25 +21,27 @@ const LoadingFallback = () => (
 
 export default function App() {
   return (
-    <FriendProvider>
-      <BrowserRouter>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          <main className="flex-grow">
-            <Suspense fallback={<LoadingFallback />}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/friend/:id" element={<FriendDetails />} />
-                <Route path="/timeline" element={<Timeline />} />
-                <Route path="/stats" element={<Stats />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </Suspense>
-          </main>
-          <Footer />
-        </div>
-        <Toaster position="bottom-right" richColors />
-      </BrowserRouter>
-    </FriendProvider>
+    <ThemeProvider>
+      <FriendProvider>
+        <BrowserRouter>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow">
+              <Suspense fallback={<LoadingFallback />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/friend/:id" element={<FriendDetails />} />
+                  <Route path="/timeline" element={<Timeline />} />
+                  <Route path="/stats" element={<Stats />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </Suspense>
+            </main>
+            <Footer />
+          </div>
+          <Toaster position="bottom-right" richColors />
+        </BrowserRouter>
+      </FriendProvider>
+    </ThemeProvider>
   );
 }
