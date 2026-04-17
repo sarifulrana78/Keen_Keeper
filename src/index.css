@@ -1,0 +1,21 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #2D5A47;
+  --color-brand-dark: #1F3F32;
+  --color-overdue: #fee2e2;
+  --color-overdue-text: #ef4444;
+  --color-almost: #fef3c7;
+  --color-almost-text: #f59e0b;
+  --color-ontrack: #dcfce7;
+  --color-ontrack-text: #22c55e;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+  }
+}
+
